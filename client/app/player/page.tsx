@@ -4,12 +4,14 @@ import { useState } from 'react';
 import GamePre from '@/components/player/game-pre';
 import Onboarding from '@/components/player/onboarding';
 import TaskNewsArticle from '@/components/player/task/news-article';
-import type { GameState } from '@/types/game';
+import TaskDamageControl from '@/components/player/task/damage-control';
+import TaskSeverance from '@/components/player/task/severance';
+import type { GameState, Task } from '@/types/game';
 
 export default function GamePage() {
   // const [gameState, setGameState] = useState<GameState>("game-pre");
   const [gameState, setGameState] = useState<GameState>("task");
-  const [task, setTask] = useState<string>("news-article");
+  const [task, setTask] = useState<Task>("severance");
 
   return (
     <div className="px-8 py-12 container max-w-4xl">
@@ -19,7 +21,7 @@ export default function GamePage() {
         </h1>
 
         <p>
-          state: {gameState}
+          state: {gameState} {gameState === "task" && <>({task})</>}
         </p>
       </div>
 
@@ -28,6 +30,8 @@ export default function GamePage() {
         : gameState === "onboarding" ? <Onboarding/>
         : gameState === "task" ? (
           task === "news-article" ? <TaskNewsArticle/>
+          : task === "damage-control" ? <TaskDamageControl/>
+          : task === "severance" ? <TaskSeverance/>
           : <></>
         )
         : <></>

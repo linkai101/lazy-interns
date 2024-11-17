@@ -4,17 +4,17 @@ export default function HostTask() {
     <div className="size-full flex items-center justify-center">
       <div className="p-8 container max-w-2xl border-2 border-neutral-300">
         <h2 className="text-3xl font-semibold">
-          Task #1: News Article
+          Task #4: Damage Control
         </h2>
 
         <img
-          src="/assets/tasks/godzilla-in-nyc.png"
-          alt="News Article"
+          src="/assets/tasks/yearn-for-the-mines.png"
+          alt="Damage Control"
           className="mt-6 aspect-video object-cover object-center bg-neutral-200"
         />
 
         <p className="mt-4 text-xl">
-          We just got breaking news! We need a headline and a lead for this article ASAP.
+          We have been under fire on social media over our &quot;possible&quot; use of &quot;slightly underage&quot; workers. We need you to release a PR statement and clean this mess up by the end of the day.
         </p>
       </div>
     </div>
