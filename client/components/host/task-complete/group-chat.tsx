@@ -1,8 +1,8 @@
 
 export default function HostTask() {
   const responses = [
-    { player: "Player 1", response: "I think it's time for a witch hunt." },
-    { player: "Player 2", response: "I think it's time for a witch hunt." },
+    { player: "Player 1", response: "I think it's time for a group chat." },
+    { player: "Player 2", response: "I think it's time for a group chat." },
   ];
 
   return (
@@ -15,7 +15,7 @@ export default function HostTask() {
 
           <img
             src="/assets/tasks/missing-lunch.png"
-            alt="News Article"
+            alt="Group Chat"
             className="mt-6 mx-auto w-72 object-cover object-center bg-neutral-200"
           />
 

@@ -12,13 +12,16 @@ import TaskSeverance from '@/components/host/task/severance';
 
 import TaskCompleteNewsArticle from '@/components/host/task-complete/news-article';
 import TaskCompleteGroupChat from '@/components/host/task-complete/group-chat';
+import TaskCompleteProductFailure from '@/components/host/task-complete/product-failure';
+import TaskCompleteDamageControl from '@/components/host/task-complete/damage-control';
+import TaskCompleteSeverance from '@/components/host/task-complete/severance';
 
 import type { GameState, Task } from '@/types/game';
 
 export default function GamePage() {
   // const [gameState, setGameState] = useState<GameState>("game-pre");
   const [gameState, setGameState] = useState<GameState>("task-complete");
-  const [task, setTask] = useState<Task>("group-chat");
+  const [task, setTask] = useState<Task>("severance");
 
   return (
     <div className="absolute inset-0 flex flex-col">
@@ -46,9 +49,9 @@ export default function GamePage() {
         : gameState === "task-complete" ? (
           task === "news-article" ? <TaskCompleteNewsArticle/>
           : task === "group-chat" ? <TaskCompleteGroupChat/>
-          : task === "product-failure" ? <></>
-          : task === "damage-control" ? <></>
-          : task === "severance" ? <></>
+          : task === "product-failure" ? <TaskCompleteProductFailure/>
+          : task === "damage-control" ? <TaskCompleteDamageControl/>
+          : task === "severance" ? <TaskCompleteSeverance/>
           : <></>
         )
         : <></>
