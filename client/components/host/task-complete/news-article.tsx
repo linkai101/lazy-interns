@@ -1,8 +1,8 @@
 
 export default function HostTask() {
   const responses = [
-    { player: "Player 1", response: "I think it's time for a witch hunt." },
-    { player: "Player 2", response: "I think it's time for a witch hunt." },
+    { player: "Player 1", response: ["Headline", "Lead"] },
+    { player: "Player 2", response: ["Headline", "Lead"] },
   ];
 
   return (
@@ -32,7 +32,9 @@ export default function HostTask() {
           {responses.map((response, i) => (
             <div key={i} className="p-4 bg-white border-2 border-neutral-300">
               <p className="font-semibold">{response.player}</p>
-              <p>{response.response}</p>
+              <p>
+                <span className="font-semibold italic">{response.response[0]}</span> — {response.response[1]}
+              </p>
             </div>
           ))}
         </div>
