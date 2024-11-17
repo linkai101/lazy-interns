@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
 export default function PlayerTask() {
-  const [headline, setHeadline] = useState<string>('');
-  const [lead, setLead] = useState<string>('');
+  const [response, setResponse] = useState<string>('');
 
   return (
     <div>
@@ -17,10 +16,10 @@ export default function PlayerTask() {
         <textarea
           className="w-full mt-1 px-3 py-1 border border-gray-300 rounded"
           id="name"
-          value={lead}
+          value={response}
           rows={3}
           placeholder="Write a short, witty remark..."
-          onChange={(e) => setLead(e.target.value)}
+          onChange={(e) => setResponse(e.target.value)}
         />
       </div>
 

@@ -3,15 +3,22 @@
 import { useState } from 'react';
 import GamePre from '@/components/host/game-pre';
 import Onboarding from '@/components/host/onboarding';
+
 import TaskNewsArticle from '@/components/host/task/news-article';
+import TaskGroupChat from '@/components/host/task/group-chat';
+import TaskProductFailure from '@/components/host/task/product-failure';
 import TaskDamageControl from '@/components/host/task/damage-control';
 import TaskSeverance from '@/components/host/task/severance';
+
+import TaskCompleteNewsArticle from '@/components/host/task-complete/news-article';
+import TaskCompleteGroupChat from '@/components/host/task-complete/group-chat';
+
 import type { GameState, Task } from '@/types/game';
 
 export default function GamePage() {
   // const [gameState, setGameState] = useState<GameState>("game-pre");
-  const [gameState, setGameState] = useState<GameState>("task");
-  const [task, setTask] = useState<Task>("news-article");
+  const [gameState, setGameState] = useState<GameState>("task-complete");
+  const [task, setTask] = useState<Task>("group-chat");
 
   return (
     <div className="absolute inset-0 flex flex-col">
@@ -30,8 +37,18 @@ export default function GamePage() {
         : gameState === "onboarding" ? <Onboarding/>
         : gameState === "task" ? (
           task === "news-article" ? <TaskNewsArticle/>
+          : task === "group-chat" ? <TaskGroupChat/>
+          : task === "product-failure" ? <TaskProductFailure/>
           : task === "damage-control" ? <TaskDamageControl/>
           : task === "severance" ? <TaskSeverance/>
+          : <></>
+        )
+        : gameState === "task-complete" ? (
+          task === "news-article" ? <TaskCompleteNewsArticle/>
+          : task === "group-chat" ? <TaskCompleteGroupChat/>
+          : task === "product-failure" ? <></>
+          : task === "damage-control" ? <></>
+          : task === "severance" ? <></>
           : <></>
         )
         : <></>
