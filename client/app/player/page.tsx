@@ -97,7 +97,7 @@ export default function GamePage() {
 
       <div className="mt-8">
         {gameState === "game-pre" ? <GamePre/>
-        : gameState === "onboarding" ? <Onboarding/>
+        : gameState === "onboarding" ? <Onboarding isLazyIntern={isLazyIntern}/>
         : gameState === "task" ? (
           responseSubmitted ? <TaskDone/>
           : task === "news-article" ? <TaskNewsArticle isLazyIntern={isLazyIntern} response={response} setResponse={setResponse} submitResponse={submitResponse}/>
