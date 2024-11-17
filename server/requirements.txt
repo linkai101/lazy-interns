@@ -1,4 +1,5 @@
 flask
 flask-sse
+flask-cors
 gunicorn
 gevent
