@@ -1,5 +1,4 @@
 "use client";
-import { useState } from 'react';
 import LazyInternView from './lazy-intern-news-article';
 
 export default function PlayerTask({ isLazyIntern, response, setResponse, submitResponse }: { isLazyIntern: boolean, response: string[], setResponse: (response: string[]) => void, submitResponse: () => void }) {

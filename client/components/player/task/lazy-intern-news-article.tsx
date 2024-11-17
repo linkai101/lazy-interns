@@ -26,7 +26,7 @@ export default function LazyInternView({ title, response, setResponse, submitRes
   async function generateResponse2() {
     if (!prompt2) return;
     setLoading2(true);
-    let prompt2Full = `The headline of the news article is ${headline}. ${prompt2}`;
+    const prompt2Full = `The headline of the news article is ${headline}. ${prompt2}`;
     const res = await fetch(`/api/player?prompt=${prompt2Full}`, {
       method: 'GET',
       headers: {
