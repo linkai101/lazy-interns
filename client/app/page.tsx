@@ -1,18 +1,36 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { getPlayer, createPlayer } from '@/utils/db';
 
 export default function Home() {
+  const router = useRouter();
   const [name, setName] = useState<string>('');
 
   // on page load
   useEffect(() => {
-    fetch(`http://${process.env.NEXT_PUBLIC_BACKEND_URL}/api/get_player`, { mode: 'no-cors' })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    async function fetchPlayer() { // check if existing player in active game exists
+      const playerId = localStorage.getItem('playerId');
+      if (playerId) {
+        const player = await getPlayer('0', playerId);
+        if (player) {
+          console.log('player detected', player);
+          return router.push('/player');
+        }
+      }
+      console.log('no existing player detected');
+    }
+    fetchPlayer();
   }, []);
+
+  async function joinGame() {
+    localStorage.removeItem('playerId');
+    const newPlayer = await createPlayer('0', name);
+    localStorage.setItem('playerId', newPlayer.id);
+    console.log('new player created', newPlayer);
+    router.push('/player');
+  }
 
   return (
     <div className="px-8 py-12 container max-w-2xl">
@@ -37,7 +55,11 @@ export default function Home() {
         />
       </div>
 
-      <button className="mt-4 px-3 py-1 bg-blue-500 text-white font-semibold rounded">
+      <button
+        className="mt-4 px-3 py-1 bg-blue-500 text-white font-semibold rounded disabled:opacity-60 transition-opacity"
+        disabled={name.length === 0}
+        onClick={() => joinGame()}
+      >
         Join Game
       </button>
 

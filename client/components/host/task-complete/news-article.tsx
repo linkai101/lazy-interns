@@ -1,10 +1,5 @@
 
-export default function HostTask() {
-  const responses = [
-    { player: "Player 1", response: ["Headline", "Lead"] },
-    { player: "Player 2", response: ["Headline", "Lead"] },
-  ];
-
+export default function HostTask({ responses }: { responses: { name: string, response: string[] }[] }) {
   return (
     <div className="size-full flex items-center justify-center">
       <div className="grid grid-cols-2 gap-16 container max-w-6xl border-2 border-neutral-300">
@@ -29,12 +24,16 @@ export default function HostTask() {
         </div>
 
         <div className="p-4 flex flex-col gap-4 bg-neutral-100">
-          {responses.map((response, i) => (
+          {responses?.map((response, i) => (
             <div key={i} className="p-4 bg-white border-2 border-neutral-300">
-              <p className="font-semibold">{response.player}</p>
-              <p>
-                <span className="font-semibold italic">{response.response[0]}</span> — {response.response[1]}
-              </p>
+              <p className="font-semibold">{response?.name}</p>
+              {(response?.response[0] || response?.response[1]) ?
+                <p>
+                  <span className="font-semibold italic">{response?.response[0]}</span> — {response?.response[1]}
+                </p>
+              :
+                <p className="text-neutral-400 italic">No response</p>
+              }
             </div>
           ))}
         </div>

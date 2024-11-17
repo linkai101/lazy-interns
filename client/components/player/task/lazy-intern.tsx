@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 
-export default function LazyInternView({ title, response, setResponse }: { title: string; response: string; setResponse: (response: string) => void }) {
+export default function LazyInternView({ title, response, setResponse, submitResponse }: { title: string; response: string[]; setResponse: (response: string[]) => void, submitResponse: () => void }) {
   const [prompt, setPrompt] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -16,7 +16,7 @@ export default function LazyInternView({ title, response, setResponse }: { title
     });
     const data = await res.json();
     console.log(data.response);
-    setResponse(data.response);
+    setResponse([data.response]);
     setLoading(false);
   }
   
@@ -44,7 +44,7 @@ export default function LazyInternView({ title, response, setResponse }: { title
         <label className="font-semibold" htmlFor="prompt">
           You:
         </label>
-        {!response && !loading ? <>
+        {!response[0] && !loading ? <>
           <textarea
             className="w-full mt-1 px-3 py-1 border border-gray-300 rounded"
             id="prompt"
@@ -77,20 +77,24 @@ export default function LazyInternView({ title, response, setResponse }: { title
         </div>
       }
 
-      {response && <>
+      {response[0] && <>
         <div className="mt-8">
           <label className="font-semibold">
             AI:
           </label>
           
-          {/* <p>{response}</p> */}
+          {/* <p>{response[0]}</p> */}
           <p className="text-neutral-400 italic">
             Response will be revealed after submission.<br/>
-            ({response.length} characters)
+            ({response[0].length} characters)
           </p>
         </div>
 
-        <button className="mt-4 px-3 py-1 bg-blue-500 text-white font-semibold rounded">
+        <button
+          className="mt-4 px-3 py-1 bg-blue-500 text-white font-semibold rounded disabled:opacity-60 transition-opacity"
+          // disabled={response[0].length === 0}
+          onClick={submitResponse}
+        >
           Submit
         </button>
       </>}

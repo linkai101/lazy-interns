@@ -2,13 +2,12 @@
 import { useState } from 'react';
 import LazyInternView from './lazy-intern-news-article';
 
-export default function PlayerTask({ isLazyIntern }: { isLazyIntern: boolean }) {
-  const [response, setResponse] = useState<string[]>(['', '']);
-
+export default function PlayerTask({ isLazyIntern, response, setResponse, submitResponse }: { isLazyIntern: boolean, response: string[], setResponse: (response: string[]) => void, submitResponse: () => void }) {
   if (isLazyIntern) return <LazyInternView
     title="Task #1: News Article"
     response={response}
     setResponse={setResponse}
+    submitResponse={submitResponse}
   />;
 
   return (
@@ -27,7 +26,7 @@ export default function PlayerTask({ isLazyIntern }: { isLazyIntern: boolean }) 
           type="text"
           value={response[0]}
           placeholder="Write a headline..."
-          onChange={(e) => setResponse(response => [e.target.value, response[1]])}
+          onChange={(e) => setResponse([e.target.value, response[1]])}
         />
       </div>
 
@@ -41,11 +40,15 @@ export default function PlayerTask({ isLazyIntern }: { isLazyIntern: boolean }) 
           value={response[1]}
           rows={3}
           placeholder="Write a 1-2 sentence lead..."
-          onChange={(e) => setResponse(response => [response[0], e.target.value])}
+          onChange={(e) => setResponse([response[0], e.target.value])}
         />
       </div>
 
-      <button className="mt-4 px-3 py-1 bg-blue-500 text-white font-semibold rounded">
+      <button
+        className="mt-4 px-3 py-1 bg-blue-500 text-white font-semibold rounded disabled:opacity-60 transition-opacity"
+        disabled={!response[0] || !response[1] || response[0].length === 0 || response[1].length === 0}
+        onClick={submitResponse}
+      >
         Submit
       </button>
     </div>

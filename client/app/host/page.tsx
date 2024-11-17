@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import GamePre from '@/components/host/game-pre';
 import Onboarding from '@/components/host/onboarding';
 
@@ -16,12 +16,48 @@ import TaskCompleteProductFailure from '@/components/host/task-complete/product-
 import TaskCompleteDamageControl from '@/components/host/task-complete/damage-control';
 import TaskCompleteSeverance from '@/components/host/task-complete/severance';
 
-import type { GameState, Task } from '@/types/game';
+import { subscribeToSession, getPlayerResponses } from '@/utils/db';
+import type { GameState, Task, Session } from '@/types/game';
 
 export default function GamePage() {
-  // const [gameState, setGameState] = useState<GameState>("game-pre");
-  const [gameState, setGameState] = useState<GameState>("task-complete");
-  const [task, setTask] = useState<Task>("severance");
+  const [session, setSession] = useState<Session|null>(null);
+
+  const [gameState, setGameState] = useState<GameState>("game-pre");
+  const [task, setTask] = useState<Task>("news-article");
+
+  const [playerResponses, setPlayerResponses] = useState<{[id: string] :{ name: string, response: string[] }}>({});
+
+  // on page load
+  useEffect(() => {
+    const unsubscribe = subscribeToSession("0", (data) => {
+      setSession(data);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  // on session change
+  useEffect(() => {
+    if (!session) return;
+    console.log(session);
+    if (session.gameState) setGameState(session.gameState);
+    if (session.task) setTask(session.task);
+  }, [session]);
+
+  // on gameState or task change
+  useEffect(() => {
+    const fetchPlayerResponses = async () => {
+      const responses = await getPlayerResponses("0");
+      if (responses) {
+        setPlayerResponses(responses);
+        console.log(responses);
+      }
+    }
+
+    fetchPlayerResponses();
+  }, [gameState, task]);
 
   return (
     <div className="absolute inset-0 flex flex-col">
@@ -47,11 +83,11 @@ export default function GamePage() {
           : <></>
         )
         : gameState === "task-complete" ? (
-          task === "news-article" ? <TaskCompleteNewsArticle/>
-          : task === "group-chat" ? <TaskCompleteGroupChat/>
-          : task === "product-failure" ? <TaskCompleteProductFailure/>
-          : task === "damage-control" ? <TaskCompleteDamageControl/>
-          : task === "severance" ? <TaskCompleteSeverance/>
+          task === "news-article" ? <TaskCompleteNewsArticle responses={Object.values(playerResponses)}/>
+          : task === "group-chat" ? <TaskCompleteGroupChat responses={Object.values(playerResponses)}/>
+          : task === "product-failure" ? <TaskCompleteProductFailure responses={Object.values(playerResponses)}/>
+          : task === "damage-control" ? <TaskCompleteDamageControl responses={Object.values(playerResponses)}/>
+          : task === "severance" ? <TaskCompleteSeverance responses={Object.values(playerResponses)}/>
           : <></>
         )
         : <></>
