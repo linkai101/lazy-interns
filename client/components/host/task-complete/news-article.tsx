@@ -27,7 +27,7 @@ export default function HostTask({ responses }: { responses: { name: string, res
           {responses?.map((response, i) => (
             <div key={i} className="p-4 bg-white border-2 border-neutral-300">
               <p className="font-semibold">{response?.name}</p>
-              {(response?.response[0] || response?.response[1]) ?
+              {(response?.response && (response?.response[0] || response?.response[1])) ?
                 <p>
                   <span className="font-semibold italic">{response?.response[0]}</span> — {response?.response[1]}
                 </p>
