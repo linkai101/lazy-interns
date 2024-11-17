@@ -3,16 +3,20 @@
 import { useState } from 'react';
 import GamePre from '@/components/player/game-pre';
 import Onboarding from '@/components/player/onboarding';
+
 import TaskNewsArticle from '@/components/player/task/news-article';
 import TaskGroupChat from '@/components/player/task/group-chat';
 import TaskProductFailure from '@/components/player/task/product-failure';
 import TaskDamageControl from '@/components/player/task/damage-control';
 import TaskSeverance from '@/components/player/task/severance';
+
+import TaskComplete from '@/components/player/task-complete';
+
 import type { GameState, Task } from '@/types/game';
 
 export default function GamePage() {
   // const [gameState, setGameState] = useState<GameState>("game-pre");
-  const [gameState, setGameState] = useState<GameState>("task");
+  const [gameState, setGameState] = useState<GameState>("task-complete");
   const [task, setTask] = useState<Task>("product-failure");
 
   return (
@@ -38,6 +42,7 @@ export default function GamePage() {
           : task === "severance" ? <TaskSeverance/>
           : <></>
         )
+        : gameState === "task-complete" ? <TaskComplete/>
         : <></>
         }
       </div>

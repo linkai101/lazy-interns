@@ -1,9 +1,18 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Home() {
   const [name, setName] = useState<string>('');
+
+  // on page load
+  useEffect(() => {
+    fetch(`http://${process.env.NEXT_PUBLIC_BACKEND_URL}/api/get_player`, { mode: 'no-cors' })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }, []);
 
   return (
     <div className="px-8 py-12 container max-w-2xl">
