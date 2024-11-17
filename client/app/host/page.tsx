@@ -1,29 +1,35 @@
 "use client";
 
 import { useState } from 'react';
-import Pregame from '@/components/player/pregame';
-import Onboarding from '@/components/player/onboarding';
+import GamePre from '@/components/host/game-pre';
+import Onboarding from '@/components/host/onboarding';
+import TaskNewsArticle from '@/components/host/task/news-article';
 import type { GameState } from '@/types/game';
 
 export default function GamePage() {
-  const [gameState, setGameState] = useState<GameState>("pregame");
+  // const [gameState, setGameState] = useState<GameState>("game-pre");
+  const [gameState, setGameState] = useState<GameState>("task");
+  
 
   return (
-    <div className="absolute inset-0">
+    <div className="absolute inset-0 flex flex-col">
       <div className="flex items-end justify-between">
         <h1 className="font-bold">
           Lazy Interns
         </h1>
 
         <p>
-          state: {gameState} (X players)
+          [HOST] state: {gameState} (X players)
         </p>
       </div>
 
-      {gameState === "pregame" ? <Pregame/>
-      : gameState === "onboarding" ? <Onboarding/>
-      : <></>
-      }
+      <div className="flex-1">
+        {gameState === "game-pre" ? <GamePre/>
+        : gameState === "onboarding" ? <Onboarding/>
+        : gameState === "task" ? <TaskNewsArticle/>
+        : <></>
+        }
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 
-export default function PlayerPregame() {
+export default function PlayerGamePre() {
   return (
     <div>
       <h2 className="text-2xl font-semibold">

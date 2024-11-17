@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from 'react';
-import Pregame from '@/components/player/pregame';
+import GamePre from '@/components/player/game-pre';
 import Onboarding from '@/components/player/onboarding';
+import TaskNewsArticle from '@/components/player/task/news-article';
 import type { GameState } from '@/types/game';
 
 export default function GamePage() {
-  const [gameState, setGameState] = useState<GameState>("pregame");
+  // const [gameState, setGameState] = useState<GameState>("game-pre");
+  const [gameState, setGameState] = useState<GameState>("task");
 
   return (
     <div className="px-8 py-12 container max-w-4xl">
@@ -21,8 +23,9 @@ export default function GamePage() {
       </div>
 
       <div className="mt-8">
-        {gameState === "pregame" ? <Pregame/>
+        {gameState === "game-pre" ? <GamePre/>
         : gameState === "onboarding" ? <Onboarding/>
+        : gameState === "task" ? <TaskNewsArticle/>
         : <></>
         }
       </div>
