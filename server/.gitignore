@@ -1,2 +1,5 @@
 .venv/
 .env
+
+# Redis
+dump.rdb

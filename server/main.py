@@ -1,6 +1,7 @@
 import re
 
 from flask import Flask, request, render_template, jsonify, Blueprint
+from flask_cors import CORS
 from flask_sse import sse
 from dataclasses import dataclass, field
 import uuid
@@ -33,6 +34,8 @@ def reset():
 reset()
 app = Flask(__name__)
 
+# debug = os.environ.get('FLASK_DEBUG', True)
+CORS(app)
 app.secret_key = os.environ['FLASK_SECRET_KEY']
 app.config['REDIS_URL'] = os.environ['REDIS_URL']
 app.register_blueprint(sse, url_prefix='/_/global-gamestate/stream')
@@ -80,7 +83,7 @@ def get_player_id():
     return {'error': 'Player not found'}, 404
 
 
-@api_bp.route('/create_player/<name>')
+@api_bp.route('/create_player/<name>', methods=['POST'])
 def create_player(name):
     global state
 
@@ -103,7 +106,7 @@ def create_player(name):
 
     if not found:
         print('not found')
-        # Generate a new player with randomly-generated UUID as their player id
+        # Generate a new player with randomly generated UUID as their player id
         player_id = str(uuid.uuid4())
         player = Player(id=player_id, name=name)
         state.players[player.id] = player
@@ -115,6 +118,7 @@ def create_player(name):
     response.set_cookie('player_id', str(player_id), max_age=12 * 60 * 60)  # 12 hours in seconds
 
     return response
+
 
 app.register_blueprint(api_bp)
 
