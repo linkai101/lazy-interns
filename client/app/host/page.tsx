@@ -72,7 +72,8 @@ export default function GamePage() {
       </div>
 
       <div className="flex-1">
-        {gameState === "game-pre" ? <GamePre/>
+        
+        {gameState === "game-pre" ? <GamePre players={playerResponses}/>
         : gameState === "onboarding" ? <Onboarding/>
         : gameState === "task" ? (
           task === "news-article" ? <TaskNewsArticle/>

@@ -1,14 +1,14 @@
 
-export default function HostGamePre() {
-  const players = [
-    { name: 'Mike Hawk' },
-    { name: 'Hugh Jass' },
-    { name: 'Al Coholic' },
-    { name: 'Seymour Butz' },
-    { name: 'Maya Normousbutt' },
-    { name: 'Dixie Normous' },
-    { name: 'Eileen Dover' },
-  ];
+export default function HostGamePre({ players }: { players: { [playerId: string]: { name: string }} }) {
+  // const players = [
+  //   { name: 'Mike Hawk' },
+  //   { name: 'Hugh Jass' },
+  //   { name: 'Al Coholic' },
+  //   { name: 'Seymour Butz' },
+  //   { name: 'Maya Normousbutt' },
+  //   { name: 'Dixie Normous' },
+  //   { name: 'Eileen Dover' },
+  // ];
 
   return (
     <div className="size-full flex items-center justify-center">
@@ -18,14 +18,14 @@ export default function HostGamePre() {
         </h2>
 
         <div className="mt-8 flex flex-col gap-2">
-          {players.map((player, i) => (
-            <div key={i} className="flex items-center justify-between">
+          {Object.entries(players).map(([id, { name }]) => (
+            <div key={id} className="flex items-center justify-between">
               <p className="text-lg">
-                {player.name}
+                {name}
               </p>
-              <button className="text-red-500 text-sm font-semibold hover:underline underline-red-500 rounded">
+              {/* <button className="text-red-500 text-sm font-semibold hover:underline underline-red-500 rounded">
                 Kick
-              </button>
+              </button> */}
             </div>
           ))}
         </div>
