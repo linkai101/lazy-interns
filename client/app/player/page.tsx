@@ -16,8 +16,9 @@ import type { GameState, Task } from '@/types/game';
 
 export default function GamePage() {
   // const [gameState, setGameState] = useState<GameState>("game-pre");
-  const [gameState, setGameState] = useState<GameState>("task-complete");
-  const [task, setTask] = useState<Task>("product-failure");
+  const [gameState, setGameState] = useState<GameState>("task");
+  const [task, setTask] = useState<Task>("news-article");
+  const [isLazyIntern, setIsLazyIntern] = useState<boolean>(true);
 
   return (
     <div className="px-8 py-12 container max-w-4xl">
@@ -35,11 +36,11 @@ export default function GamePage() {
         {gameState === "game-pre" ? <GamePre/>
         : gameState === "onboarding" ? <Onboarding/>
         : gameState === "task" ? (
-          task === "news-article" ? <TaskNewsArticle/>
-          : task === "group-chat" ? <TaskGroupChat/>
-          : task === "product-failure" ? <TaskProductFailure/>
-          : task === "damage-control" ? <TaskDamageControl/>
-          : task === "severance" ? <TaskSeverance/>
+          task === "news-article" ? <TaskNewsArticle isLazyIntern={isLazyIntern}/>
+          : task === "group-chat" ? <TaskGroupChat isLazyIntern={isLazyIntern}/>
+          : task === "product-failure" ? <TaskProductFailure isLazyIntern={isLazyIntern}/>
+          : task === "damage-control" ? <TaskDamageControl isLazyIntern={isLazyIntern}/>
+          : task === "severance" ? <TaskSeverance isLazyIntern={isLazyIntern}/>
           : <></>
         )
         : gameState === "task-complete" ? <TaskComplete/>

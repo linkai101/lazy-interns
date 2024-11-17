@@ -1,7 +1,15 @@
+"use client";
 import { useState } from 'react';
+import LazyInternView from './lazy-intern-news-article';
 
-export default function PlayerTask() {
+export default function PlayerTask({ isLazyIntern }: { isLazyIntern: boolean }) {
   const [response, setResponse] = useState<string[]>(['', '']);
+
+  if (isLazyIntern) return <LazyInternView
+    title="Task #1: News Article"
+    response={response}
+    setResponse={setResponse}
+  />;
 
   return (
     <div>
